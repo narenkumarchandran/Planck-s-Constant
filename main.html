@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<title>Planck Constant Virtual Lab</title>
+<style>
+    /* CSS styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        text-decoration-color: #FFD700;
+        background-image:url("bg1.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        
+    }
+    .container {
+        max-width: 1000px;
+        margin: 100px auto;
+        padding: 90px;
+        border: 1px solid #101010;
+        border-radius: 5px;
+        
+        
+    }
+    button, select {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer; 
+    width: 120px; /* Equal width for buttons and select */
+    height: 50px;
+    margin-right: 15px;
+}
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #101010;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #101010
+    }
+    .graph {
+        width: 100%;
+        height: 300px;
+        border: 1px solid #ddd;
+        margin-top: 20px; 
+        
+    } 
+    #btnDisplayVoltage {
+        width: 180px;
+        
+        
+         /* Adjust width for voltage display button */
+    }
+    .element-container {
+    display: flex; /* Use Flexbox */
+    justify-content: center; 
+    margin-top: 20px;
+    
+}
+p{
+    color:#ffffff;
+}
+tr{
+    color:#ffffff
+}
+h1{
+    color:#FFD700
+}
+voltage{
+    color:#59a615
+}
+
+.element {
+    width: 90px; /* Adjust size as needed */
+    height: 90px; /* Adjust size as needed */
+    background-color: gray;
+    border-radius: 50%; /* Makes the element circular */
+    margin-right: 100px; /* Add margin between elements */
+}
+    .gold {
+        background-color: #FFD700 !important;
+    }
+    .blue {
+        background-color: blue !important;
+    }
+    .aqua {
+        background-color: aqua !important;
+    }
+    .green {
+        background-color: green !important;
+    }
+    .yellow {
+        background-color: yellow !important;
+    }
+    .red {
+        background-color: red !important;
+    } 
+    #voltageDisplay {
+        text-align: center; /* Center align voltage display */
+        margin-top: 10px; /* Add some margin */
+        font-size: 30px; /* Adjust font size */
+        text-decoration: #ffffff;
+    }
+    button,select{
+        background-color: rgb(14, 167, 237);
+        color: white;
+        flex-grow:1;
+        font-size: larger;
+    }
+    button:hover,select:hover{
+        background-color: rgb(190, 202, 20);
+
+    }
+    .buttons{
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+    }
+    .containerdata{
+        flex-direction: column;
+    }
+    .parentcontainer{
+        display: flex;
+        flex-direction: column;
+    }
+    .mainbody{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex-grow: 0;
+        width: 100%;
+    }
+    .heading{
+        background-color:rgb(6, 8, 120);
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        justify-content:center;
+    }
+</style>
+</head>
+<body>
+    <div class="heading">
+        <h1 style="flex-grow: 1;margin-left: 150px;"><center>Planck Constant Virtual Lab</center></h1>
+        
+        <div class="labmanual" style="color: #FFD700; justify-self: flex-end; font-size: 20px; "><a href="https://drive.google.com/file/d/1H-1UISYXXdapWHROunrpk2-ngpY67OYC/view" target="_blank" style="text-decoration: none; list-style-type: none;color: #FFD700;">Lab Manual</a></div>
+    </div>
+    <div class="mainbody">
+        <div class="buttons">
+            <button id="btnAim">Aim</button>
+            <button id="btnFormula">Formula</button>
+            <button id="btnTable">Table</button>
+            <button id="btnGraph">Graph</button>
+            <button id="btnResult">Result</button>
+            <button id="btnLight">Light</button>
+            <select id="wavelength">
+                <option>Wavelength</option>
+                <option value="460">460 nm</option>
+                <option value="500">500 nm</option>
+                <option value="540">540 nm</option>
+                <option value="570">570 nm</option>
+                <option value="635">635 nm</option>
+            </select> 
+        </div>
+        
+        <div class="parentcontainer">
+            <div class="containerdata">
+                <div id="aim" style="display:none;">
+                    <p style="font-size: 25px; text-align: center; margin-left: 150px;margin-top: 150px;">Calculate (i) Planck's constant and (ii) work function of the metal using photoelectric effect </p>
+                </div> 
+                <div id="formula" style="display:none;">
+                    <center><p style="font-size: 30px;margin-left: 180px;">v<sub>0</sub> = h / (e ⋅ ν) - φ</p></center><br>
+                    <table style="margin-left:200px">
+                        <tr style="font-size: 24px;">
+                            <th>Symbol</th>
+                            <th>Description</th>
+                            <th>Unit</th>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>v<sub>0</sub></td>
+                            <td>Stopping potential</td>
+                            <td>V</td>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>h</td>
+                            <td>Planck's constant</td>
+                            <td>Js</td>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>e</td>
+                            <td>Charge of an electron</td>
+                            <td>Coulombs</td>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>v</td>
+                            <td>Frequency of the incident light</td>
+                            <td>Hz</td>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>φ</td>
+                            <td>Work function of the given metallic film</td>
+                            <td>eV</td>
+                        </tr>
+
+                    </table>
+                </div>
+                <div id="table" style="display:none; margin-left: 350px; margin-top: 150px;">
+                    <table>
+                        <tr style="font-size: 24px;">
+                            <th>Wavelength λ (nm)</th>
+                            <th>460</th>
+                            <th>500</th>
+                            <th>540</th>
+                            <th>570</th>
+                            <th>635</th>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>1/λ</td>
+                            <td>2.17</td>
+                            <td>2.00</td>
+                            <td>1.85</td>
+                            <td>1.75</td>
+                            <td>1.57</td>
+                        </tr>
+                        <tr style="font-size: 24px;">
+                            <td>Stopping potential (V)</td>
+                            <td>-0.96</td>
+                            <td>-0.75</td>
+                            <td>-0.61</td>
+                            <td>-0.46</td>
+                            <td>-0.27</td>
+                        </tr>
+                        <!-- Add more rows if needed -->
+                    </table>
+                </div>
+                <div id="graph" class="graph" style="display:none;margin-top: 100px; margin-left: 200px; border-width: 0px;">
+                    <div><img src="graph.png" style="width: 600px; height: 300px; margin-left: 50px;" /></div>
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div id="result" style="display:none; font-size: 24px; margin-top: 150px; margin-left: 380px;">
+                    <p>Planck's constant, h = 6.636X10^-34Js</p>
+
+                    <p>Work function of given metallic film, ɸ = 1.4 eV</p>
+                </div>
+
+            
+                
+                <div id="voltageDisplay" style="margin-left: 280px;"></div>
+                <div id="currentdisplay" style="font-size: 30px; text-align: center;width: 100%;margin-left: 130px;margin-top: 20px;"></div>
+
+                
+            </div>
+        
+            <div class="element-container" style="margin-left: 380px; display: flex; flex-direction: row; justify-content: center;align-items: center;">
+                <div class="element" id="element1" ></div>
+                <div class="element" id="element2" ></div>
+                 
+            </div>
+        </div>
+    </div>
+
+<script>
+    // JavaScript code
+
+    const graphContainer = document.getElementById('myChart');
+
+// Prepare chart configuration
+const chartData = {
+    labels: [2.17,1.57,1.75,1.85,2.00],
+    datasets: [{
+        label: 'Stopping Voltage vs 1/λ',
+         // Values for x-axis
+
+        data: [-0.92, -0.76, -0.62, -0.46, -0.30], // This will be populated later
+        borderColor: 'blue',
+        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+        type: 'line'
+    }]
+};
+
+// Create a Chart object
+
+
+    // Event listener for the wavelength select element
+document.getElementById('wavelength').addEventListener('change', function() {
+    var element2 = document.getElementById('element2');
+    var wavelength = this.value;
+
+    element2.classList.remove('gold', 'blue', 'aqua', 'green', 'yellow','red');
+
+    if (wavelength === '460') {
+        element2.classList.add('blue');
+        displayVoltage();
+    } else if (wavelength === '500') {
+        element2.classList.add('aqua');
+        displayVoltage();
+    } else if (wavelength === '540') {
+        element2.classList.add('green');
+        displayVoltage();
+    } else if (wavelength === '570') {
+        element2.classList.add('yellow');
+        displayVoltage();
+    } else if (wavelength === '635') {
+        element2.classList.add('red');
+        displayVoltage();
+    }
+});
+
+// Function to calculate and display voltage
+function displayVoltage() {
+    const wavelength = document.getElementById('wavelength').value;
+    const voltage = calculateVoltage(wavelength);
+    const voltageDisplay = document.getElementById('voltageDisplay');
+    voltageDisplay.textContent = `Voltage: ${voltage} V`;
+    const currentdisplay=document.querySelector('#currentdisplay')
+    currentdisplay.textContent=`Current: 0.0 A`
+    voltageDisplay.style.color="red";
+    currentdisplay.style.color="red";
+
+}
+
+// Function to calculate voltage
+function calculateVoltage(wavelength) {
+    let voltage;
+    switch (wavelength) {
+        case '460':
+            voltage = -0.92;
+            break;
+        case '500':
+            voltage = -0.76;
+            break;
+        case '540':
+            voltage = -0.62;
+            break;
+        case '570':
+            voltage = -0.46;
+            break;
+        case '635':
+            voltage = -0.30;
+            break;
+        default:
+            voltage = 0; // Default value
+    }
+    return voltage;
+}
+
+
+    document.getElementById('btnAim').addEventListener('click', function() {
+        document.getElementById('aim').style.display = 'block';
+        hideAllExcept('aim');
+    });
+
+    document.getElementById('btnFormula').addEventListener('click', function() {
+        document.getElementById('formula').style.display = 'block';
+        hideAllExcept('formula');
+    });
+
+    document.getElementById('btnTable').addEventListener('click', function() {
+        document.getElementById('table').style.display = 'block';
+        hideAllExcept('table');
+    });
+
+    document.getElementById('btnGraph').addEventListener('click', function() {
+        document.getElementById('graph').style.display = 'block';
+        hideAllExcept('graph');
+
+        const table = document.getElementById('table');
+const rows = table.rows;
+
+const stoppingVoltages = [];
+const inverseLambdaValues = [];
+
+for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    stoppingVoltages.push(parseFloat(row.cells[2].textContent));
+    inverseLambdaValues.push(parseFloat(row.cells[1].textContent));
+}
+
+// Update chart data
+chartData.datasets[0].data = inverseLambdaValues.map((x, i) => ({ x, y: stoppingVoltages[i] }));
+
+// Render the chart
+myChart.update();
+
+    });
+
+    document.getElementById('btnResult').addEventListener('click', function() {
+        document.getElementById('result').style.display = 'block';
+        hideAllExcept('result');
+    });
+
+   
+    document.getElementById('btnLight').addEventListener('click', function() {
+        var element1 = document.getElementById('element1');
+        var element2 = document.getElementById('element2');
+        var wavelength = document.getElementById('wavelength').value;
+
+        element1.classList.remove('gold', 'blue', 'aqua', 'green', 'yellow','red');
+        element2.classList.remove('gold', 'blue', 'aqua', 'green', 'yellow','red');
+
+        element1.classList.add('gold');
+        
+        if (wavelength === '460') {
+            element2.classList.add('blue');
+        } else if (wavelength === '500') {
+            element2.classList.add('aqua');
+        } else if (wavelength === '540') {
+            element2.classList.add('green');
+        } else if (wavelength === '570') {
+            element2.classList.add('yellow');
+        } else if (wavelength === '635') {
+            element2.classList.add('red'); 
+        }
+    });
+       
+
+    function hideAllExcept(id) {
+        var sections = ['aim', 'formula', 'table', 'graph', 'result'];
+        sections.forEach(function(section) {
+            if (section !== id) {
+                document.getElementById(section).style.display = 'none';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
